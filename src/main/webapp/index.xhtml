@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <!-- Standard Meta -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- Site Properties -->
+    <title>Zuzka</title>
+
+    <h:outputStylesheet name="css/font-awesome.css"/>
+    <h:outputStylesheet name="css/styles.css"/>
+    <h:outputStylesheet name="css/semantic.min.css"/>
+
+</h:head>
+
+<h:body>
+
+    <h:outputScript name="js/jquery-3.1.1.min.js"/>
+    <h:outputScript name="js/init.js"/>
+    <h:outputScript name="js/semantic.min.js"/>
+
+    <ui:insert name="date">
+        <ui:include src="WEB-INF/templates/menu.xhtml"/>
+    </ui:insert>
+
+    <!-- Page Contents -->
+    <div class="pusher">
+        <!--<div class="ui inverted vertical masthead  segment landpage-image ">
+
+            <div class="ui container">
+                <p class="ui inverted" style="font-size: 4em; padding: 20px 0px">
+                    <i> Webinson</i>
+                </p>
+                &lt;!&ndash;<h2>Do whatever you want when you want to.</h2>
+                <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>&ndash;&gt;
+            </div>
+
+        </div>-->
+        <pre></pre>
+        <div class="ui container text">
+            <!--<h1 class="ui header">Webinson</h1>-->
+            <img class="ui centered large image" src="resources/images/logo_webinson.png"/>
+            <pre></pre>
+            <p>is a Košice, Slovakia based company founded by experienced entrepreneurs committed to developing innovative Web/Mobile applications and advanced Digital Marketing
+                plans/road-maps! We bring to you a dynamic team with experience that includes design, development, and management of Digital Applications,
+                Marketing Plans and Projects.</p>
+        </div>
+
+        <!--<pre></pre>
+        &lt;!&ndash;<div class="ui vertical stripe segment">&ndash;&gt;
+        <div class="ui middle aligned text stackable grid container ">
+            <div class="row">
+                <div class="five wide column">
+
+                </div>
+
+                <div class="five wide column">
+                    <img class="ui small circular image center-image" src="resources/images/slavo.jpg"/>
+                    <h3 class="ui header">Slavo</h3>
+                    <p>Boss.</p>
+                </div>
+
+                <div class="five wide column">
+
+
+                </div>
+            </div>
+
+        </div>-->
+
+        <!--</div>-->
+        <pre></pre>
+        <div class="ui container text">
+            <h4 class="ui horizontal divider header">
+                <!--<i class="tag icon"></i>-->
+                Projects
+            </h4>
+        </div>
+        <pre></pre>
+
+        <div class="ui grid centered">
+            <h:form>
+                <div class="ui grid three column">
+                    <ui:repeat value="#{itemView.getItems()}" var="item">
+                        <div class="column">
+                            <div class="ui special cards">
+                                <div class="card ui primary button">
+                                    <div class="blurring dimmable image">
+
+                                        <!--<div class="ui inverted dimmer">-->
+                                        <h:commandLink id="ajax" action="#{itemView.onItemDetail(item)}"
+                                                       styleClass="ui inverted dimmer">
+                                            <div class="content">
+
+                                                <div class="description">
+                                                    <h3 style="color: black">#{item.header}</h3>
+                                                </div>
+
+                                            </div>
+                                        </h:commandLink>
+                                        <!--</div>-->
+                                        <img src="#{item.img}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </h:form>
+        </div>
+        <pre></pre>
+
+
+        <!--<div class="ui fitted divider"></div>-->
+        <pre></pre>
+
+        <div class="ui inverted vertical footer segment">
+            <div class="ui container">
+                <h:form styleClass="ui form">
+                    <h2><label>Kontaktný formulár</label></h2>
+                    <pre></pre>
+                    <div class="field">
+                        <div class="two fields">
+                            <div class="field">
+                                <p:inputText value="#{getInTouchView.name}" placeholder="Meno" type="text"/>
+                            </div>
+                            <div class="field">
+                                <p:inputText value="#{userBean.password}" placeholder="Priezvisko" type="text"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field">
+                            <p:inputText value="#{userBean.username}" placeholder="Emailová adresa" type="text"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field">
+                            <p:inputText value="#{userBean.username}" placeholder="Telefón" type="text"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="field">
+                            <textarea></textarea>
+                        </div>
+                    </div>
+
+                    <pre></pre>
+                    <div class="field">
+                        <p:commandLink value="Send" action="#{userBean.updateData()}"
+                                       styleClass="ui button" validateClient="true">
+                        </p:commandLink>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </div>
+
+</h:body>
+
+</html>
