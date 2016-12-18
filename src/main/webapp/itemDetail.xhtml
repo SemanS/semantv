@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
     <!-- Standard Meta -->
@@ -54,6 +55,46 @@
         <h:outputText value="#{itemView.selectedItem.text}" escape="false"/>
     </div>
 
+    <!--<div class="ui inverted vertical footer segment">
+        <div class="ui container">
+            <h:form styleClass="ui form">
+                <h2><label>Kontaktný formulár</label></h2>
+                <pre></pre>
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <p:inputText value="#{getInTouchView.name}" placeholder="Meno" type="text"/>
+                        </div>
+                        <div class="field">
+                            <p:inputText value="#{userBean.password}" placeholder="Priezvisko" type="text"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="field">
+                        <p:inputText value="#{userBean.username}" placeholder="Emailová adresa" type="text"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="field">
+                        <p:inputText value="#{userBean.username}" placeholder="Telefón" type="text"/>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="field">
+                        <textarea></textarea>
+                    </div>
+                </div>
+
+                <pre></pre>
+                <div class="field">
+                    <p:commandLink value="Send" action="#{userBean.updateData()}"
+                                   styleClass="ui button" validateClient="true">
+                    </p:commandLink>
+                </div>
+            </h:form>
+        </div>
+    </div>-->
 
 </h:body>
 

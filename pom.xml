@@ -5,7 +5,7 @@
 
     <packaging>war</packaging>
     <groupId>org.joinfaces</groupId>
-    <artifactId>clickable-budget-cz</artifactId>
+    <artifactId>ROOT</artifactId>
     <version>1</version>
     <name>Clickable budget</name>
     <description>Clickable budget for Czech republic</description>
@@ -23,7 +23,7 @@
         <!-- Uncomment this if you want to use with java6
         <jackson.version>2.7.6</jackson.version>
         -->
-        <start-class>com.webinson.zuzka.ApplicationConfig</start-class>
+        <start-class>com.webinson.semantv.ApplicationConfig</start-class>
         <tomcat.version>8.5.5</tomcat.version>
         <querydsl.version>4.1.3</querydsl.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

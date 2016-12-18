@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
@@ -13,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
     <!-- Site Properties -->
-    <title>Zuzka</title>
+    <title>SEMAN - TV</title>
 
     <h:outputStylesheet name="css/font-awesome.css"/>
     <h:outputStylesheet name="css/styles.css"/>
@@ -27,12 +26,12 @@
     <h:outputScript name="js/init.js"/>
     <h:outputScript name="js/semantic.min.js"/>
 
-    <ui:insert name="date">
+    <!--<ui:insert name="date">
         <ui:include src="WEB-INF/templates/menu.xhtml"/>
-    </ui:insert>
+    </ui:insert>-->
 
     <!-- Page Contents -->
-    <div class="pusher">
+    <div class="pusher ">
         <!--<div class="ui inverted vertical masthead  segment landpage-image ">
 
             <div class="ui container">
@@ -45,14 +44,14 @@
 
         </div>-->
         <pre></pre>
-        <div class="ui container text">
-            <!--<h1 class="ui header">Webinson</h1>-->
+        <!--<div class="ui container text">
+            &lt;!&ndash;<h1 class="ui header">Webinson</h1>&ndash;&gt;
             <img class="ui centered large image" src="resources/images/logo_webinson.png"/>
             <pre></pre>
             <p>is a Košice, Slovakia based company founded by experienced entrepreneurs committed to developing innovative Web/Mobile applications and advanced Digital Marketing
                 plans/road-maps! We bring to you a dynamic team with experience that includes design, development, and management of Digital Applications,
                 Marketing Plans and Projects.</p>
-        </div>
+        </div>-->
 
         <!--<pre></pre>
         &lt;!&ndash;<div class="ui vertical stripe segment">&ndash;&gt;
@@ -81,36 +80,41 @@
         <div class="ui container text">
             <h4 class="ui horizontal divider header">
                 <!--<i class="tag icon"></i>-->
-                Projects
+                SEMAN TV
             </h4>
         </div>
         <pre></pre>
-
-        <div class="ui grid centered">
-            <h:form>
-                <div class="ui grid three column">
+        <pre></pre>
+        <div class="ui container">
+            <h:form id="form">
+                <div class="ui grid four column centered">
                     <ui:repeat value="#{itemView.getItems()}" var="item">
                         <div class="column">
-                            <div class="ui special cards">
-                                <div class="card ui primary button">
-                                    <div class="blurring dimmable image">
-
-                                        <!--<div class="ui inverted dimmer">-->
-                                        <h:commandLink id="ajax" action="#{itemView.onItemDetail(item)}"
-                                                       styleClass="ui inverted dimmer">
-                                            <div class="content">
-
-                                                <div class="description">
-                                                    <h3 style="color: black">#{item.header}</h3>
-                                                </div>
-
-                                            </div>
-                                        </h:commandLink>
-                                        <!--</div>-->
-                                        <img src="#{item.img}"/>
+                            <!--<div class="ui link cards">-->
+                            <div class="ui fluid card">
+                                <h:commandLink id="oukej" action="#{itemView.onItemDetail(item)}"
+                                               styleClass="image">
+                                    <img src="#{item.img}"/>
+                                </h:commandLink>
+                                <!--<div class="ui inverted dimmer">-->
+                                <!-- <h:commandLink id="ajax" action="#{itemView.onItemDetail(item)}"
+                                                styleClass="ui inverted dimmer">-->
+                                <div class="content">
+                                    <div class="header"><h:commandLink id="ajax" action="#{itemView.onItemDetail(item)}"
+                                                                       value="#{item.header}"></h:commandLink>
                                     </div>
+                                    <div class="meta">#{item.duration}</div>
+                                    <div class="description">asdlkasd</div>
                                 </div>
+
+                                <!--</h:commandLink>-->
+                                <!--</div>-->
+
+
+                                <!-- <h:outputText value="#{item.header}"/>-->
                             </div>
+
+                            <!-- </div>-->
                         </div>
                     </ui:repeat>
                 </div>
@@ -120,11 +124,13 @@
 
 
         <!--<div class="ui fitted divider"></div>-->
-        <pre></pre>
 
-        <div class="ui inverted vertical footer segment">
-            <div class="ui container">
-                <h:form styleClass="ui form">
+        <pre></pre>
+        <h:form id="formular" styleClass="ui form">
+            <p:growl showDetail="true"/>
+            <div class="ui inverted vertical footer segment">
+                <div class="ui container">
+
                     <h2><label>Kontaktný formulár</label></h2>
                     <pre></pre>
                     <div class="field">
@@ -133,18 +139,18 @@
                                 <p:inputText value="#{getInTouchView.name}" placeholder="Meno" type="text"/>
                             </div>
                             <div class="field">
-                                <p:inputText value="#{userBean.password}" placeholder="Priezvisko" type="text"/>
+                                <p:inputText value="#{getInTouchView.sureName}" placeholder="Priezvisko" type="text"/>
                             </div>
                         </div>
                     </div>
                     <div class="field">
                         <div class="field">
-                            <p:inputText value="#{userBean.username}" placeholder="Emailová adresa" type="text"/>
+                            <p:inputText value="#{getInTouchView.email}" placeholder="Emailová adresa" type="text"/>
                         </div>
                     </div>
                     <div class="field">
                         <div class="field">
-                            <p:inputText value="#{userBean.username}" placeholder="Telefón" type="text"/>
+                            <p:inputText value="#{getInTouchView.phoneNumber}" placeholder="Telefón" type="text"/>
                         </div>
                     </div>
                     <div class="field">
@@ -155,14 +161,57 @@
 
                     <pre></pre>
                     <div class="field">
-                        <p:commandLink value="Send" action="#{userBean.updateData()}"
-                                       styleClass="ui button" validateClient="true">
+                        <p:commandLink value="Send" action="#{getInTouchView.updateData}"
+                                       ajax="false" styleClass="ui button" validateClient="true">
                         </p:commandLink>
                     </div>
-                </h:form>
+
+                </div>
             </div>
-        </div>
+        </h:form>
     </div>
+
+
+    <script type="text/javascript">
+        /**
+         * Faces Validator
+         */
+        PrimeFaces.validator['custom.emailValidator'] = {
+
+            pattern: /\S+@\S+/,
+
+            validate: function (element, value) {
+                //use element.data() to access validation metadata, in this case there is none.
+                if (!this.pattern.test(value)) {
+                    throw {
+                        summary: 'Validation Error',
+                        detail: value + ' is not a valid email.'
+                    }
+                }
+            }
+        };
+
+        /**
+         * Bean validator
+         */
+        PrimeFaces.validator['Email'] = {
+
+            pattern: /\S+@\S+/,
+
+            MESSAGE_ID: 'org.primefaces.examples.validate.email.message',
+
+            validate: function (element, value) {
+                var vc = PrimeFaces.util.ValidationContext;
+
+                if (!this.pattern.test(value)) {
+                    var msgStr = element.data('p-email-msg'),
+                        msg = msgStr ? {summary: msgStr} : vc.getMessage(this.MESSAGE_ID);
+
+                    throw msg;
+                }
+            }
+        };
+    </script>
 
 </h:body>
 

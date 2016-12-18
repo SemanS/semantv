@@ -21,6 +21,9 @@
 </h:head>
 
 <h:body>
+    <f:metadata>
+        <f:viewParam name="url" value="#{editorController.itemDto.url}"/>
+    </f:metadata>
 
     <h:outputScript name="js/jquery-3.1.1.min.js"/>
     <h:outputScript name="js/init.js"/>
@@ -30,7 +33,7 @@
     <div class="ui container">
 
         <ui:insert name="attachedMenu">
-            <ui:include src="WEB-INF/templates/attached-menu.xhtml"/>
+            <ui:include src="WEB-INF/templates/attached-menu-dashboard.xhtml"/>
         </ui:insert>
 
 
@@ -81,7 +84,7 @@
                 <div class="sixteen wide column" id="asd">
 
                     <div class="ui segment">
-                        <div class="two fields" id="matchGrid">
+                        <div class="three fields" id="matchGrid">
                             <div class="field">
                                 <label>Header:</label>
                                 <div class="field">
@@ -96,6 +99,15 @@
                                 <div class="field">
                                     <p:inputText placeholder="Zadajte text URL" id="seo"
                                                  value="#{editorController.itemDto.url}"
+                                                 type="text">
+                                    </p:inputText>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Minutáž:</label>
+                                <div class="field">
+                                    <p:inputText placeholder="Zadajte minutáž" id="duration"
+                                                 value="#{editorController.itemDto.duration}"
                                                  type="text">
                                     </p:inputText>
                                 </div>

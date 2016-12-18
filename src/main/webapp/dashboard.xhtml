@@ -1,9 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
 
 <h:head>
     <!-- Standard Meta -->
@@ -14,23 +16,7 @@
     <!-- Site Properties -->
     <title>Zuzka</title>
 
-    <h:outputStylesheet name="css/font-awesome.css"/>
-    <h:outputStylesheet name="css/styles.css"/>
     <h:outputStylesheet name="css/semantic.min.css"/>
-
-    <style type="text/css">
-
-        .landpage-image {
-            height: 100% !important;
-        }
-
-        .landpage-image {
-            background-image: url('resources/images/zuzka_bg.png') !important;
-            background-repeat: no-repeat !important;
-            background-size: cover !important;
-        }
-
-    </style>
 
 </h:head>
 
@@ -40,48 +26,85 @@
     <h:outputScript name="js/init.js"/>
     <h:outputScript name="js/semantic.min.js"/>
 
-    <ui:insert name="date">
-        <ui:include src="WEB-INF/templates/menu.xhtml"/>
-    </ui:insert>
 
-    <pre></pre>
-    <pre></pre>
-    <pre></pre>
-    <pre></pre>
-    <pre></pre>
+    <div class="ui container">
 
-    <!-- Page Contents -->
-    <div class="ui relaxed grid container">
-        <h:form>
-            <div class="ui relaxed grid container">
-                <ui:repeat value="#{itemView.getItems()}" var="item">
-                    <div class="five wide column">
+        <ui:insert name="attachedMenu">
+            <ui:include src="WEB-INF/templates/attached-menu-dashboard.xhtml"/>
+        </ui:insert>
+
+
+        <div class="ui grid centered">
+            <h:form>
+
+                <div class="ui grid three column centered segment">
+                    <ui:repeat value="#{itemView.getItems()}" var="item">
+                        <div class="column">
+                            <div class="ui special cards">
+                                <div class="card ui primary button">
+                                    <div class="blurring dimmable image">
+
+                                        <!--<div class="ui inverted dimmer">-->
+                                        <h:commandLink id="fas" action="#{itemView.onDashboardItemDetail(item)}"
+                                                       styleClass="ui inverted dimmer">
+                                            <div class="content">
+                                                <div class="center">
+
+
+                                                </div>
+                                                <div class="description">
+                                                    <h3 style="color: black">#{itemView.trimHeader(item.header)}</h3>
+                                                </div>
+
+                                            </div>
+                                        </h:commandLink>
+
+                                        <!--</div>-->
+                                        <img src="#{item.img}"/>
+
+                                    </div>
+                                    <div class="ui two bottom attached buttons">
+                                        <h:commandButton styleClass="ui blue button" id="deleteItem"
+                                                         value="Editovať item"
+                                                         action="#{itemView.onDashboardItemDetail(item)}"
+                                        />
+                                        <h:commandButton styleClass="ui button" id="editItem"
+                                                         value="Vymazať item"
+                                                         action="#{itemView.deleteItem(item)}"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                    <div class="column">
                         <div class="ui special cards">
                             <div class="card ui primary button">
                                 <div class="blurring dimmable image">
 
                                     <!--<div class="ui inverted dimmer">-->
-                                    <h:commandLink id="ajax" action="#{itemView.onDashboardItemDetail(item)}"
+                                    <h:commandLink id="ajax" action="#{itemView.newDashboardItem()}"
                                                    styleClass="ui inverted dimmer">
                                         <div class="content">
 
-                                            <div class="description">
-                                                <h3>Elliot Fu is a film-maker from New York.</h3>
-                                            </div>
+                                            <!-- <div class="description">
+                                                 <h3>Elliot Fu is a film-maker from New York.</h3>
+                                             </div>-->
 
                                         </div>
                                     </h:commandLink>
                                     <!--</div>-->
-                                    <img src="resources/images/image1.jpg"/>
+                                    <img src="resources/images/novy_item.jpg"/>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </ui:repeat>
-            </div>
-        </h:form>
-    </div>
+                </div>
+            </h:form>
+        </div>
 
+
+    </div>
 
 </h:body>
 

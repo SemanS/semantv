@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" build-on-make="true" name="clickable-budget-cz:war exploded">
-    <output-path>$PROJECT_DIR$/target/clickable-budget-cz-1</output-path>
+  <artifact type="exploded-war" name="semantv:war exploded">
+    <output-path>$PROJECT_DIR$/target/ROOT-1</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -162,7 +162,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/clickable-budget-cz-1/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/ROOT-1/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="semantv/web/Web" />
     </root>
