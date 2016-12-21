@@ -144,7 +144,7 @@ public class EditorController implements Serializable {
         /*String fileNameSuffix = "." + "jpg";*/
         String fileNameSuffix = "." + FilenameUtils.getExtension(fileName);
 
-        File uploadFolder = new File("C:\\Projects\\Webinson\\images");
+        File uploadFolder = new File("/var/project/images");
 
         try {
             File result = File.createTempFile(fileNamePrefix, fileNameSuffix, uploadFolder);
@@ -198,7 +198,7 @@ public class EditorController implements Serializable {
         /*String fileNameSuffix = "." + "jpg";*/
         String fileNameSuffix = "." + FilenameUtils.getExtension(fileName);
 
-        File uploadFolder = new File("C:\\Projects\\Webinson\\images");
+        File uploadFolder = new File("/var/project/images");
 
         try {
             File result = File.createTempFile(fileNamePrefix, fileNameSuffix, uploadFolder);

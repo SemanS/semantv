@@ -54,7 +54,7 @@ public class GetInTouchView {
     public String updateData() throws UnsupportedEncodingException {
         final Email email = EmailImpl.builder()
                 .from(new InternetAddress("ceo@webinson.com", "Message from " + name + sureName))
-                .to(Lists.newArrayList(new InternetAddress("Slavosmn@gmail.com", "asd")))
+                .to(Lists.newArrayList(new InternetAddress("ing.vladimir.seman@gmail.com", "Správa zo seman.tv")))
                 .subject(name + sureName + phoneNumber)
                 .body(getEmail() + textarea)
                 .encoding(Charset.forName("UTF-8")).build();
