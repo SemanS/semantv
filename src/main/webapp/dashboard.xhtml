@@ -25,6 +25,7 @@
     <h:outputScript name="js/jquery-3.1.1.min.js"/>
     <h:outputScript name="js/init.js"/>
     <h:outputScript name="js/semantic.min.js"/>
+    <h:outputScript name="js/Sortable.min.js"/>
 
 
     <div class="ui container">
@@ -32,80 +33,122 @@
         <ui:insert name="attachedMenu">
             <ui:include src="WEB-INF/templates/attached-menu-dashboard.xhtml"/>
         </ui:insert>
+        <pre></pre>
+        <pre></pre>
+        <ui:repeat value="#{itemView.getCategories()}" var="category">
+            <div class="ui container text">
+                <h4 class="ui horizontal divider header">
+                    <!--<i class="tag icon"></i>-->
+                    #{category.name}
+                </h4>
+            </div>
+            <pre></pre>
+            <pre></pre>
+            <div class="ui container">
+                <h:form>
+                    <div id="simpleList" class="ui grid four column centered">
+                        <ui:repeat value="#{itemView.allItemsByCategory(category)}" var="item">
+                            <div class="column">
+                                <div class="ui special cards">
+                                    <div class="card ui primary button">
+                                        <div class="blurring dimmable image">
 
+                                            <!--<div class="ui inverted dimmer">-->
+                                            <h:commandLink id="fas" action="#{itemView.onDashboardItemDetail(item)}"
+                                                           styleClass="ui inverted dimmer">
+                                                <div class="content">
+                                                    <div class="center">
 
-        <div class="ui grid centered">
-            <h:form>
-
-                <div class="ui grid three column centered segment">
-                    <ui:repeat value="#{itemView.getItems()}" var="item">
-                        <div class="column">
-                            <div class="ui special cards">
-                                <div class="card ui primary button">
-                                    <div class="blurring dimmable image">
-
-                                        <!--<div class="ui inverted dimmer">-->
-                                        <h:commandLink id="fas" action="#{itemView.onDashboardItemDetail(item)}"
-                                                       styleClass="ui inverted dimmer">
-                                            <div class="content">
-                                                <div class="center">
-
+                                                    </div>
+                                                    <div class="description">
+                                                        <h3 style="color: black">#{itemView.trimHeader(item.header)}</h3>
+                                                    </div>
 
                                                 </div>
-                                                <div class="description">
-                                                    <h3 style="color: black">#{itemView.trimHeader(item.header)}</h3>
-                                                </div>
+                                            </h:commandLink>
 
-                                            </div>
-                                        </h:commandLink>
+                                            <!--</div>-->
+                                            <img src="#{item.img}"/>
 
-                                        <!--</div>-->
-                                        <img src="#{item.img}"/>
-
-                                    </div>
-                                    <div class="ui two bottom attached buttons">
-                                        <h:commandButton styleClass="ui blue button" id="deleteItem"
-                                                         value="Editovať item"
-                                                         action="#{itemView.onDashboardItemDetail(item)}"
-                                        />
-                                        <h:commandButton styleClass="ui button" id="editItem"
-                                                         value="Vymazať item"
-                                                         action="#{itemView.deleteItem(item)}"
-                                        />
+                                        </div>
+                                        <div class="ui two bottom attached buttons">
+                                            <h:commandButton styleClass="ui blue button" id="deleteItem"
+                                                             value="Editovať item"
+                                                             action="#{itemView.onDashboardItemDetail(item)}"
+                                            />
+                                            <h:commandButton styleClass="ui button" id="editItem"
+                                                             value="Vymazať item"
+                                                             action="#{itemView.deleteItem(item)}"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </ui:repeat>
-                    <div class="column">
+
+                        </ui:repeat>
+
+                    </div>
+                    <!--<div class="column">
                         <div class="ui special cards">
                             <div class="card ui primary button">
                                 <div class="blurring dimmable image">
 
-                                    <!--<div class="ui inverted dimmer">-->
+                                    &lt;!&ndash;<div class="ui inverted dimmer">&ndash;&gt;
                                     <h:commandLink id="ajax" action="#{itemView.newDashboardItem()}"
                                                    styleClass="ui inverted dimmer">
                                         <div class="content">
 
-                                            <!-- <div class="description">
+                                            &lt;!&ndash; <div class="description">
                                                  <h3>Elliot Fu is a film-maker from New York.</h3>
-                                             </div>-->
+                                             </div>&ndash;&gt;
 
                                         </div>
                                     </h:commandLink>
-                                    <!--</div>-->
+                                    &lt;!&ndash;</div>&ndash;&gt;
                                     <img src="resources/images/novy_item.jpg"/>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </h:form>
-        </div>
-
+                    </div>-->
+                </h:form>
+            </div>
+            <pre></pre>
+            <pre></pre>
+        </ui:repeat>
 
     </div>
 
+    <script>
+        Sortable.create(simpleList, {
+
+            group: "localStorage-example",
+            store: {
+                /**
+                 * Get the order of elements. Called once during initialization.
+                 * @param   {Sortable}  sortable
+                 * @returns {Array}
+                 */
+                get: function (sortable) {
+                    var order = localStorage.getItem(sortable.options.group.name);
+
+                    remoteCommandFunctionName(order.split('|'));
+
+                    return order ? order.split('|') : [];
+                },
+
+                /**
+                 * Save the order of elements. Called onEnd (when the item is dropped).
+                 * @param {Sortable}  sortable
+                 */
+                set: function (sortable) {
+                    var order = sortable.toArray();
+                    localStorage.setItem(sortable.options.group.name, order.join('|'));
+                }
+            }
+
+        });
+
+    </script>
 </h:body>
 
 </html>

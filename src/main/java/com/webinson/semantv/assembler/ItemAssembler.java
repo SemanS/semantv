@@ -2,6 +2,7 @@ package com.webinson.semantv.assembler;
 
 import com.webinson.semantv.dto.ItemDto;
 import com.webinson.semantv.entity.Item;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,15 +15,19 @@ import java.util.List;
 @Component
 public class ItemAssembler {
 
+    @Autowired
+    CategoryAssembler categoryAssembler;
 
     public ItemDto convertToDto(Item model, ItemDto dto) {
         dto.setHeader(model.getHeader());
         dto.setText(model.getText());
         dto.setDate(model.getDate());
         dto.setUrl(model.getUrl());
-        dto.setCategory(model.getCategory());
+        dto.setCategory(categoryAssembler.toDto(model.getCategory()));
         dto.setImg(model.getImg());
         dto.setDuration(model.getDuration());
+        dto.setItemDescription(model.getItemDescription());
+        dto.setTimeStamp(model.getTimeStamp());
         return dto;
     }
 
@@ -32,9 +37,11 @@ public class ItemAssembler {
         itemDto.setText(model.getText());
         itemDto.setDate(model.getDate());
         itemDto.setUrl(model.getUrl());
-        itemDto.setCategory(model.getCategory());
+        itemDto.setCategory(categoryAssembler.toDto(model.getCategory()));
         itemDto.setImg(model.getImg());
         itemDto.setDuration(model.getDuration());
+        itemDto.setItemDescription(model.getItemDescription());
+        itemDto.setTimeStamp(model.getTimeStamp());
         return itemDto;
     }
 
@@ -43,6 +50,10 @@ public class ItemAssembler {
         item.setText(itemDto.getText());
         item.setUrl(itemDto.getUrl());
         item.setDuration(itemDto.getDuration());
+        item.setImg(itemDto.getImg());
+        item.setCategory(categoryAssembler.toModel(itemDto.getCategory()));
+        item.setItemDescription(itemDto.getItemDescription());
+        item.setTimeStamp(itemDto.getTimeStamp());
         return item;
     }
 

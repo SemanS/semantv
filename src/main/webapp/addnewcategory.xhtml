@@ -1,0 +1,70 @@
+<!--
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+    &lt;!&ndash; Standard Meta &ndash;&gt;
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    &lt;!&ndash; Site Properties &ndash;&gt;
+    <title>Zuzka</title>
+
+    <h:outputStylesheet name="css/semantic.min.css"/>
+
+</h:head>
+
+<h:body>
+
+    &lt;!&ndash;<h:outputScript name="js/jquery-3.1.1.min.js"/>
+    <h:outputScript name="js/init.js"/>
+    <h:outputScript name="js/semantic.min.js"/>&ndash;&gt;
+
+
+    <div class="ui container">
+
+        <ui:insert name="attachedMenu">
+            <ui:include src="WEB-INF/templates/attached-menu-dashboard.xhtml"/>
+        </ui:insert>
+
+        <h:form enctype="multipart/form-data">
+            <div class="ui grid">
+
+                <div class="sixteen wide column" id="sad">
+                    <div class="ui segment">
+                        <div class="field">
+                            <label>Pridať novú kategóriu:</label>
+
+                            <h3 style="margin-top: 0">Basic OrderList</h3>
+                            <p:inputText placeholder="Zadajte text novej kategórie" id="newCategory"
+                                         value="#{orderListView.selectedCategory}"
+                                         type="text">
+                            </p:inputText>
+
+                            <p:orderList id="orderList" value="#{orderListView.categories}" var="category"
+                                         controlsLocation="none"
+                                         itemLabel="#{category}" itemValue="#{category}"/>
+
+                            <h:commandButton value="Submit" oncomplete="PF('cityDialog').show()"
+                                             action="#{orderListView.saveCategory}" style="margin-top:5px" update="orderList"/>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </h:form>
+
+    </div>
+
+</h:body>
+
+</html>-->

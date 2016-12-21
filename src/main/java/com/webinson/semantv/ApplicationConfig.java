@@ -1,7 +1,6 @@
 package com.webinson.semantv;
 
 
-import com.webinson.semantv.utils.Converter;
 import org.primefaces.webapp.filter.FileUploadFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -17,15 +16,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Slavo on 13.09.2016.
@@ -70,14 +66,7 @@ public class ApplicationConfig extends SpringBootServletInitializer {
         return registrationBean;
     }
 
-    /*@Bean
-    public FilterRegistrationBean FileUploadFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new org.primefaces.webapp.filter.FileUploadFilter());
-        registration.setName("PrimeFaces FileUpload Filter");
-        return registration;
-    }
-*/
+
     @Bean
     public ServletRegistrationBean facesServletRegistration() {
         ServletRegistrationBean registration = new ServletRegistrationBean(facesServlet(), "*.xhtml");
@@ -101,48 +90,5 @@ public class ApplicationConfig extends SpringBootServletInitializer {
         };
 
     }
-
-
-    @Bean
-    public Converter getHandler() {
-        Converter handler = new Converter();
-        handler.setMarshaller(getCastorMarshaller());
-        handler.setUnmarshaller(getCastorMarshaller());
-        return handler;
-    }
-
-    /*@Bean
-    public CastorMarshaller getCastorMarshaller() {
-        CastorMarshaller castorMarshaller = new CastorMarshaller();
-        Resource resource = new ClassPathResource("mapping.xml");
-        castorMarshaller.setMappingLocation(resource);
-        return castorMarshaller;
-    }*/
-
-    @Bean
-    public Jaxb2Marshaller getCastorMarshaller() {
-        Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-        jaxb2Marshaller.setPackagesToScan("com.webinson.clickablebudget.dto");
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("jaxb.formatted.output", true);
-        jaxb2Marshaller.setMarshallerProperties(map);
-        return jaxb2Marshaller;
-    }
-
-    /*@Bean
-    public FilterRegistrationBean prettyFilter() {
-        FilterRegistrationBean rewriteFilter = new FilterRegistrationBean(new PrettyFilter());
-
-        // Filter Forward, Request, Asyc, and Error-related requests.
-        rewriteFilter.setDispatcherTypes(DispatcherType.FORWARD,
-                DispatcherType.REQUEST,
-                DispatcherType.ASYNC,
-                DispatcherType.ERROR);
-
-        // Attach the filter to the rootIncomes URL for the website. e.g.) http://www.example.com
-        rewriteFilter.addUrlPatterns("");
-
-        return rewriteFilter;
-    }*/
 
 }

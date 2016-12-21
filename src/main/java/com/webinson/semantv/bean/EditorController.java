@@ -1,7 +1,10 @@
 package com.webinson.semantv.bean;
 
 import com.ocpsoft.pretty.PrettyContext;
+import com.webinson.semantv.dto.CategoryDto;
 import com.webinson.semantv.dto.ItemDto;
+import com.webinson.semantv.entity.Category;
+import com.webinson.semantv.service.CategoryService;
 import com.webinson.semantv.service.ItemService;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,9 +18,13 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.*;
+import java.util.Calendar;
+import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -28,6 +35,13 @@ import org.apache.commons.io.FilenameUtils;
 @ViewScoped
 public class EditorController implements Serializable {
 
+    @Autowired
+    CategoryService categoryService;
+
+    @Getter
+    @Setter
+    private List<CategoryDto> categories;
+
     @Getter
     @Setter
     @ManagedProperty(value = "#{param.itemDto.url}")
@@ -36,6 +50,10 @@ public class EditorController implements Serializable {
     @Getter
     @Setter
     private String text;
+
+    @Getter
+    @Setter
+    private String selectedCategory;
 
     @Getter
     @Setter
@@ -57,16 +75,6 @@ public class EditorController implements Serializable {
     @Setter
     private Part imgFile;
 
-    @Getter
-    @Setter
-   /* @ManagedProperty(value = "#{param.selectedCard}")*/
-    private String selectedCard;
-
-    @Getter
-    @Setter
-    /*@ManagedProperty(value = "#{param.selectedCategory}")*/
-    private String selectedCategory;
-
     @Autowired
     ItemService itemService;
 
@@ -75,6 +83,8 @@ public class EditorController implements Serializable {
 
         text = showText();
         itemDto = showItemDto();
+        categories = categoryService.getAllCategories();
+        selectedCategory = itemDto.getCategory().getName();
     }
 
     public ItemDto showItemDto() {
@@ -91,7 +101,7 @@ public class EditorController implements Serializable {
         String segments[] = path.split("/");
         String resultUrl = segments[segments.length - 1];
 
-        itemService.saveItemByUrl(resultUrl, itemDto);
+        itemService.saveItemByUrl(resultUrl, selectedCategory, itemDto);
         return "pretty:dashboard";
     }
 
@@ -104,7 +114,7 @@ public class EditorController implements Serializable {
         return itemService.getTextOfItemByUrl(resultUrl);
     }
 
-    public void saveText() {
+    /*public void saveText() {
 
         //System.out.println(selectedCard);
         String path = PrettyContext.getCurrentInstance().getRequestURL().toURL();
@@ -112,7 +122,7 @@ public class EditorController implements Serializable {
         String resultUrl = segments[segments.length - 1];
 
         itemService.saveItemByUrl(resultUrl, itemDto);
-    }
+    }*/
 
     public void saveImageText() {
 

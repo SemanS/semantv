@@ -4,7 +4,9 @@ import com.ocpsoft.pretty.faces.annotation.URLAction;
 import com.ocpsoft.pretty.faces.annotation.URLBeanName;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
+import com.webinson.semantv.dto.CategoryDto;
 import com.webinson.semantv.dto.ItemDto;
+import com.webinson.semantv.service.CategoryService;
 import com.webinson.semantv.service.ItemService;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +19,11 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Slavo on 10/4/2016.
@@ -35,10 +41,6 @@ import java.util.List;
                 pattern = "/login",
                 viewId = "/login.xhtml"),
         @URLMapping(
-                id = "category",
-                pattern = "/category/#{ selectedCategory: itemView.selectedCategory}/#{ selectedItem : itemView.selectedItem}",
-                viewId = "/category.xhtml"),
-        @URLMapping(
                 id = "items",
                 pattern = "/items",
                 viewId = "/items.xhtml"),
@@ -51,6 +53,10 @@ import java.util.List;
                 pattern = "/dashboard",
                 viewId = "/dashboard.xhtml"),
         @URLMapping(
+                id = "dashboard-category",
+                pattern = "/add-category",
+                viewId = "/addnewcategory.xhtml"),
+        @URLMapping(
                 id = "dashboard-detail",
                 pattern = "/dashboard/#{ itemUrl : itemView.itemUrl}",
                 viewId = "/dashboarditemdetail.xhtml")
@@ -59,6 +65,9 @@ public class ItemView implements Serializable {
 
     @Autowired
     ItemService itemService;
+
+    @Autowired
+    CategoryService categoryService;
 
     @Getter
     @Setter
@@ -71,6 +80,10 @@ public class ItemView implements Serializable {
     @Getter
     @Setter
     private List<ItemDto> items;
+
+    @Getter
+    @Setter
+    private List<CategoryDto> categories;
 
     @Getter
     @Setter
@@ -96,7 +109,13 @@ public class ItemView implements Serializable {
     @PostConstruct
     public void init() {
 
-        items = itemService.getAllItems();
+        categories = categoryService.getAllCategories();
+
+    }
+
+    public List<ItemDto> allItemsByCategory(CategoryDto categoryDto) {
+
+        return itemService.getItemsByCategory(categoryDto);
     }
 
     public void onItemDetail(ItemDto itemDto) throws IOException {
@@ -109,9 +128,16 @@ public class ItemView implements Serializable {
 
     public void newDashboardItem() throws IOException {
         ItemDto itemDto = new ItemDto();
-        itemDto.setUrl("daco");
+        SecureRandom random = new SecureRandom();
+        itemDto.setUrl(new BigInteger(130, random).toString(32));
         itemDto.setImg("images/newItem.jpg");
-        itemService.saveNewItem(itemDto.getUrl(), itemDto.getImg());
+
+        Calendar calendar = Calendar.getInstance();
+        /*java.sql.Timestamp ourJavaTimestampObject = new java.sql.Timestamp(calendar.getTime().getTime());*/
+        itemDto.setTimeStamp(Calendar.getInstance());
+        itemDto.setCategory(categoryService.getCategory());
+
+        itemService.saveNewItem(itemDto.getUrl(), itemDto);
         FacesContext.getCurrentInstance().getExternalContext().redirect("/dashboard/" + itemDto.getUrl());
     }
 
@@ -127,18 +153,6 @@ public class ItemView implements Serializable {
         }
 
         return header + " ...";
-    }
-
-
-    public void saveText() {
-
-        System.out.println(itemUrl);
-        //System.out.println(selectedCard);
-        /*String path = PrettyContext.getCurrentInstance().getRequestURL().toURL();
-        String segments[] = path.split("/");
-        String resultUrl = segments[segments.length - 1];
-
-        itemService.saveItemByUrl(resultUrl, text);*/
     }
 
 }

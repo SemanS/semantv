@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Created by Slavo on 11/23/2016.
  */
 @Entity
-@Table(name = "category", schema = "zuzka")
+@Table(name = "category", schema = "semantv")
 @Data
 @NoArgsConstructor
 public class Category implements Serializable {

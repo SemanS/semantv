@@ -22,6 +22,7 @@
 
 <h:body>
 
+
     <h:outputScript name="js/jquery-3.1.1.min.js"/>
     <h:outputScript name="js/init.js"/>
     <h:outputScript name="js/semantic.min.js"/>
@@ -31,7 +32,11 @@
     </ui:insert>-->
 
     <!-- Page Contents -->
-    <div class="pusher ">
+    <div class="pusher" id="example1">
+        <img class="ui small image center-image" src="resources/images/logo%20semantv.png"/>
+        <!-- <div class="ui sticky" style="width: 272px ! important; height: 262.567px ! important; left: 19.0333px;">
+
+         </div>-->
         <!--<div class="ui inverted vertical masthead  segment landpage-image ">
 
             <div class="ui container">
@@ -77,49 +82,58 @@
 
         <!--</div>-->
         <pre></pre>
-        <div class="ui container text">
-            <h4 class="ui horizontal divider header">
-                <!--<i class="tag icon"></i>-->
-                SEMAN TV
-            </h4>
-        </div>
-        <pre></pre>
-        <pre></pre>
-        <div class="ui container">
-            <h:form id="form">
-                <div class="ui grid four column centered">
-                    <ui:repeat value="#{itemView.getItems()}" var="item">
-                        <div class="column">
-                            <!--<div class="ui link cards">-->
-                            <div class="ui fluid card">
-                                <h:commandLink id="oukej" action="#{itemView.onItemDetail(item)}"
-                                               styleClass="image">
-                                    <img src="#{item.img}"/>
-                                </h:commandLink>
-                                <!--<div class="ui inverted dimmer">-->
-                                <!-- <h:commandLink id="ajax" action="#{itemView.onItemDetail(item)}"
-                                                styleClass="ui inverted dimmer">-->
-                                <div class="content">
-                                    <div class="header"><h:commandLink id="ajax" action="#{itemView.onItemDetail(item)}"
-                                                                       value="#{item.header}"></h:commandLink>
+
+        <ui:repeat value="#{itemView.getCategories()}" var="category">
+            <div class="ui container text">
+                <h4 class="ui horizontal divider header">
+                    <!--<i class="tag icon"></i>-->
+                    #{category.name}
+                </h4>
+            </div>
+            <pre></pre>
+            <pre></pre>
+            <div class="ui container">
+                <h:form id="form">
+                    <div class="ui grid four column centered">
+                        <ui:repeat value="#{itemView.allItemsByCategory(category)}" var="item">
+                            <div class="column">
+                                <!--<div class="ui link cards">-->
+                                <div class="ui fluid card">
+                                    <h:commandLink id="oukej" action="#{itemView.onItemDetail(item)}"
+                                                   styleClass="image">
+                                        <img src="#{item.img}"/>
+                                    </h:commandLink>
+                                    <!--<div class="ui inverted dimmer">-->
+                                    <!-- <h:commandLink id="ajax" action="#{itemView.onItemDetail(item)}"
+                                                    styleClass="ui inverted dimmer">-->
+                                    <div class="content">
+                                        <div class="header">
+                                            <h:commandLink id="ajax"
+                                                           action="#{itemView.onItemDetail(item)}"
+                                                           value="#{item.header}"></h:commandLink>
+                                        </div>
+                                        <div class="meta">#{item.duration}</div>
+                                        <div class="description">#{item.itemDescription}</div>
                                     </div>
-                                    <div class="meta">#{item.duration}</div>
-                                    <div class="description">asdlkasd</div>
+
+                                    <!--</h:commandLink>-->
+                                    <!--</div>-->
+
+
+                                    <!-- <h:outputText value="#{item.header}"/>-->
                                 </div>
 
-                                <!--</h:commandLink>-->
-                                <!--</div>-->
-
-
-                                <!-- <h:outputText value="#{item.header}"/>-->
+                                <!-- </div>-->
                             </div>
+                        </ui:repeat>
+                    </div>
+                </h:form>
+            </div>
+            <pre></pre>
+            <pre></pre>
+        </ui:repeat>
 
-                            <!-- </div>-->
-                        </div>
-                    </ui:repeat>
-                </div>
-            </h:form>
-        </div>
+        <pre></pre>
         <pre></pre>
 
 
@@ -139,7 +153,8 @@
                                 <p:inputText value="#{getInTouchView.name}" placeholder="Meno" type="text"/>
                             </div>
                             <div class="field">
-                                <p:inputText value="#{getInTouchView.sureName}" placeholder="Priezvisko" type="text"/>
+                                <p:inputText value="#{getInTouchView.sureName}" placeholder="Priezvisko"
+                                             type="text"/>
                             </div>
                         </div>
                     </div>
@@ -155,13 +170,14 @@
                     </div>
                     <div class="field">
                         <div class="field">
-                            <textarea></textarea>
+                            <p:inputTextarea styleClass="textarea" value="#{getInTouchView.textarea}"
+                                             placeholder="Zadajte text správy" type="text"/>
                         </div>
                     </div>
 
                     <pre></pre>
                     <div class="field">
-                        <p:commandLink value="Send" action="#{getInTouchView.updateData}"
+                        <p:commandLink value="Poslať" action="#{getInTouchView.updateData}"
                                        ajax="false" styleClass="ui button" validateClient="true">
                         </p:commandLink>
                     </div>
@@ -210,6 +226,38 @@
                     throw msg;
                 }
             }
+        };
+    </script>
+    <script>
+        function findOffset(element) {
+            var top = 0, left = 0;
+
+            do {
+                top += element.offsetTop || 0;
+                left += element.offsetLeft || 0;
+                element = element.offsetParent;
+            } while (element);
+
+            return {
+                top: top,
+                left: left
+            };
+        }
+
+        window.onload = function () {
+            var stickyHeader = document.getElementById('sticky');
+            var headerOffset = findOffset(stickyHeader);
+
+            window.onscroll = function () {
+                // body.scrollTop is deprecated and no longer available on Firefox
+                var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+                if (bodyScrollTop > headerOffset.top) {
+                    stickyHeader.classList.add('fixed');
+                } else {
+                    stickyHeader.classList.remove('fixed');
+                }
+            };
         };
     </script>
 

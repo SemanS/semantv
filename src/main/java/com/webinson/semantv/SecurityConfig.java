@@ -42,8 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected UserDetailsService userDetailsService() {
-        UserDetails user1 = new User("persapiens", "123", AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN"));
-        UserDetails user2 = new User("nyilmaz", "qwe", AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER"));
-        return new InMemoryUserDetailsManager(Arrays.asList(user1, user2));
+        UserDetails user1 = new User("ing.vladimir.seman", "vsx10058", AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN"));
+        //UserDetails user2 = new User("nyilmaz", "qwe", AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER"));
+        return new InMemoryUserDetailsManager(Arrays.asList(user1));
     }
 }

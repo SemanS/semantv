@@ -1,14 +1,23 @@
 package com.webinson.semantv.service.impl;
 
+import com.querydsl.jpa.impl.JPAQuery;
+import com.webinson.semantv.assembler.CategoryAssembler;
 import com.webinson.semantv.assembler.ItemAssembler;
+import com.webinson.semantv.dao.CategoryDao;
 import com.webinson.semantv.dao.ItemDao;
+import com.webinson.semantv.dto.CategoryDto;
 import com.webinson.semantv.dto.ItemDto;
+import com.webinson.semantv.entity.Category;
 import com.webinson.semantv.entity.Item;
+import com.webinson.semantv.entity.QItem;
 import com.webinson.semantv.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,13 +30,23 @@ public class ItemServiceImpl implements ItemService {
     ItemDao itemDao;
 
     @Autowired
+    CategoryDao categoryDao;
+
+    @Autowired
     ItemAssembler itemAssembler;
+
+    @Autowired
+    CategoryAssembler categoryAssembler;
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     public List<ItemDto> getAllItems() {
 
-        List<ItemDto> items = new ArrayList<ItemDto>();
-        items = itemAssembler.toDtos(itemDao.findAll());
-        return items;
+        final JPAQuery<Item> query = new JPAQuery<>(entityManager);
+        QItem item = QItem.item;
+        List<Item> items = query.from(item).select(item).orderBy(item.timeStamp.desc()).fetch();
+        return itemAssembler.toDtos(items);
 
     }
 
@@ -49,17 +68,18 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void saveItemByUrl(String url, ItemDto itemDto) {
+    public void saveItemByUrl(String url, String selectedCategory, ItemDto itemDto) {
         Item item = itemDao.findByUrl(url);
         itemAssembler.convertToModel(item, itemDto);
+        item.setCategory(categoryDao.findByName(selectedCategory));
         itemDao.save(item);
     }
 
     @Override
-    public void saveNewItem(String url, String img) {
+    public void saveNewItem(String url, ItemDto itemDto) {
         Item item = new Item();
+        itemAssembler.convertToModel(item, itemDto);
         item.setUrl(url);
-        item.setImg(img);
         itemDao.save(item);
     }
 
@@ -68,6 +88,17 @@ public class ItemServiceImpl implements ItemService {
         Item item = new Item();
         item = itemDao.findByUrl(url);
         itemDao.delete(item);
+    }
+
+    @Override
+    public List<ItemDto> getItemsByCategory(CategoryDto categoryDto) {
+        Category category = new Category();
+
+        final JPAQuery<Item> query = new JPAQuery<>(entityManager);
+        QItem item = QItem.item;
+        List<Item> items = query.from(item).select(item).where(item.category.name.eq(categoryDto.getName())).fetch();
+        return itemAssembler.toDtos(items);
+
     }
 
     @Override

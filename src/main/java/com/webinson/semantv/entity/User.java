@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * Created by Slavo on 11/27/2016.
  */
-@Entity
+/*@Entity
 @Table(name = "user", schema = "zuzka")
 @Data
 @NoArgsConstructor
@@ -31,4 +31,4 @@ public class User implements Serializable {
     @Column(name = "hash")
     private Date hash;
 
-}
+}*/

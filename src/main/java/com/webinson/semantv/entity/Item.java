@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "item", schema = "zuzka")
+@Table(name = "item", schema = "semantv")
 @Data
 @NoArgsConstructor
 public class Item implements Serializable {
@@ -35,7 +37,7 @@ public class Item implements Serializable {
     @Column(name = "url")
     private String url;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -44,4 +46,11 @@ public class Item implements Serializable {
 
     @Column(name = "duration")
     private String duration;
+
+    @Column(name = "itemdescription")
+    private String itemDescription;
+
+    @Column(name = "timestamp")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar timeStamp;
 }

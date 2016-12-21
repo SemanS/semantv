@@ -1,5 +1,6 @@
 package com.webinson.semantv.service;
 
+import com.webinson.semantv.dto.CategoryDto;
 import com.webinson.semantv.dto.ItemDto;
 
 import java.util.List;
@@ -19,10 +20,13 @@ public interface ItemService {
 
     public void saveImgByUrl(String url, String img);
 
-    public void saveItemByUrl(String url, ItemDto itemDto);
+    public void saveItemByUrl(String url, String selectedCategory, ItemDto itemDto);
 
-    public void saveNewItem(String url, String img);
+    public void saveNewItem(String url, ItemDto itemDto);
 
     public void deleteItem(String url);
+
+    public List<ItemDto> getItemsByCategory(CategoryDto categoryDto);
+
 
 }
