@@ -17,6 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -93,7 +94,6 @@ public class ItemView implements Serializable {
     @Setter
     private String selectedUser;
 
-
     @URLAction
     public String loadItem() throws IOException {
 
@@ -130,7 +130,7 @@ public class ItemView implements Serializable {
         ItemDto itemDto = new ItemDto();
         SecureRandom random = new SecureRandom();
         itemDto.setUrl(new BigInteger(130, random).toString(32));
-        itemDto.setImg("images/newItem.jpg");
+        /*itemDto.setImg("images/newItem.jpg");*/
 
         Calendar calendar = Calendar.getInstance();
         /*java.sql.Timestamp ourJavaTimestampObject = new java.sql.Timestamp(calendar.getTime().getTime());*/

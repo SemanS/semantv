@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,6 +29,11 @@ public class ItemAssembler {
         dto.setDuration(model.getDuration());
         dto.setItemDescription(model.getItemDescription());
         dto.setTimeStamp(model.getTimeStamp());
+        if (model.getImgBase() == null) {
+            dto.setImgBase("");
+        } else {
+            dto.setImgBase(Base64.getEncoder().encodeToString(model.getImgBase()));
+        }
         return dto;
     }
 
@@ -42,6 +48,11 @@ public class ItemAssembler {
         itemDto.setDuration(model.getDuration());
         itemDto.setItemDescription(model.getItemDescription());
         itemDto.setTimeStamp(model.getTimeStamp());
+        if (model.getImgBase() == null) {
+            itemDto.setImgBase("");
+        } else {
+            itemDto.setImgBase(Base64.getEncoder().encodeToString(model.getImgBase()));
+        }
         return itemDto;
     }
 

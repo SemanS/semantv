@@ -53,4 +53,7 @@ public class Item implements Serializable {
     @Column(name = "timestamp")
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar timeStamp;
+
+    @Column(name = "img_base")
+    private byte[] imgBase;
 }

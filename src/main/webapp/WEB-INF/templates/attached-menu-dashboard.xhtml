@@ -11,6 +11,9 @@
                     <h:link class="item" outcome="/dashboard"><i class="options icon"></i>DashBoard</h:link>
                     <h:commandLink class="item" action="#{itemView.newDashboardItem()}"><i
                             class="play icon"></i>Pridať video</h:commandLink>
+                    <h:outputLink class="item right"
+                                  value="${pageContext.request.contextPath}/logout"><i
+                            class="user icon"></i>Log out</h:outputLink>
                     <!--<a class='initially hidden item' id="reset-menu" href="javascript:void(0);">
                         <i class='red remove icon'></i>Menu2
                     </a>-->

@@ -68,9 +68,16 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void saveItemByUrl(String url, String selectedCategory, ItemDto itemDto) {
-        Item item = itemDao.findByUrl(url);
-        itemAssembler.convertToModel(item, itemDto);
+    public Item getEntityByUrl(String url) {
+        Item item = new Item();
+        item = itemDao.findByUrl(url);
+        return item;
+    }
+
+    @Override
+    public void saveItemByUrl(String selectedCategory, Item item) {
+        //Item item = itemDao.findByUrl(url);
+        //itemAssembler.convertToModel(item, itemDto);
         item.setCategory(categoryDao.findByName(selectedCategory));
         itemDao.save(item);
     }
@@ -102,11 +109,17 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public void saveTextByUrl(String url, String text) {
+        Item item = itemDao.findByUrl(url);
+        item.setText(text);
+        itemDao.save(item);
+    }
+
+    @Override
     public void saveImgByUrl(String url, String img) {
         Item item = itemDao.findByUrl(url);
         item.setImg(img);
         itemDao.save(item);
-
     }
 
 }

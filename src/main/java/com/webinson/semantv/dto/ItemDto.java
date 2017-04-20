@@ -24,5 +24,6 @@ public class ItemDto {
     private String duration;
     private String itemDescription;
     private Calendar timeStamp;
+    private String imgBase;
 
 }

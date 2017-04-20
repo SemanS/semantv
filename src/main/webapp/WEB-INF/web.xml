@@ -4,7 +4,7 @@
      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <error-page>
+   <!-- <error-page>
         <error-code>500</error-code>
         <location>/error</location>
     </error-page>
@@ -12,7 +12,7 @@
     <error-page>
         <error-code>404</error-code>
         <location>/error</location>
-    </error-page>
+    </error-page>-->
     <!--
         <listener>
             <listener-class>org.ocpsoft.rewrite.servlet.impl.RewriteServletRequestListener</listener-class>
@@ -37,7 +37,7 @@
             <dispatcher>ERROR</dispatcher>
         </filter-mapping>-->
 
-    <property description="Uploaded Images" name="alternatedocroot_1" value="from=/uploads/* dir=C:\var\webapp\"/>
+    <!--<property description="Uploaded Images" name="alternatedocroot_1" value="from=/uploads/* dir=C:\var\webapp\"/>
 
     <context-param>
         <param-name>primefaces.UPLOADER</param-name>
@@ -62,7 +62,7 @@
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-    </servlet>
+    </servlet>-->
     <!--
     If you intend to hide the resources from public access
     -->
@@ -73,11 +73,11 @@
     </context-param>-->
 
     <!-- Map these files with JSF -->
-    <servlet-mapping>
+    <!--<servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
-
+-->
     <!--
 
         <servlet>

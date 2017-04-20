@@ -22,6 +22,7 @@ import javax.faces.webapp.FacesServlet;
 import javax.servlet.DispatcherType;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 
 /**
  * Created by Slavo on 13.09.2016.
@@ -33,6 +34,8 @@ import javax.servlet.ServletException;
 @ComponentScan(basePackages = {"com.webinson.semantv, it.ozimov.springboot"})
 @EnableJpaRepositories(basePackages = "com.webinson.semantv.dao")
 @EntityScan(basePackages = {"com.webinson.semantv.entity"})
+@MultipartConfig(fileSizeThreshold=1024*1024,
+        maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
 public class ApplicationConfig extends SpringBootServletInitializer {
 
     @ComponentScan(basePackages = "com.webinson.semantv.service", scopedProxy = ScopedProxyMode.INTERFACES)
@@ -57,14 +60,14 @@ public class ApplicationConfig extends SpringBootServletInitializer {
         return new FacesServlet();
     }
 
-    @Bean
+    /*@Bean
     public FilterRegistrationBean facesUploadFilterRegistration() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean(new FileUploadFilter(), facesServletRegistration());
         registrationBean.setName("PrimeFaces FileUpload Filter");
         registrationBean.addUrlPatterns("");
         registrationBean.setDispatcherTypes(DispatcherType.FORWARD, DispatcherType.REQUEST);
         return registrationBean;
-    }
+    }*/
 
 
     @Bean
@@ -85,7 +88,8 @@ public class ApplicationConfig extends SpringBootServletInitializer {
                 servletContext.setInitParameter("primefaces.CLIENT_SIDE_VALIDATION", Boolean.TRUE.toString());
                 servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", Boolean.TRUE.toString());
                 servletContext.setInitParameter("primefaces.FONT_AWESOME", Boolean.TRUE.toString());
-                servletContext.setInitParameter("primefaces.UPLOADER", "commons");
+                //servletContext.setInitParameter("primefaces.UPLOADER", "commons");
+                servletContext.setInitParameter("javax.faces.STATE_SAVING_METHOD", "client");
             }
         };
 

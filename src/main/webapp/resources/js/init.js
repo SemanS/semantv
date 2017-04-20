@@ -7,11 +7,11 @@
             on: 'hover'
         });
 
-        $('.ui.sticky')
+        /*$('.ui.sticky')
             .sticky({
                 context: '#example1'
             })
-        ;
+        ;*/
 
     }); // end of document ready
 })(jQuery); // end of jQuery name space

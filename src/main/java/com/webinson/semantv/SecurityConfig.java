@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -27,11 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("app_username")
                 .passwordParameter("app_password")
                 .defaultSuccessUrl("/dashboard").and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").and()
                 .csrf()
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/upload").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/dashboard").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/dashboard.xhtml").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/dashboard/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/fileUpload.xhtml").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/city/**").permitAll()

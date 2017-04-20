@@ -46,44 +46,46 @@
             <pre></pre>
             <div class="ui container">
                 <h:form>
-                    <div id="simpleList" class="ui grid four column centered">
+                    <div id="simpleList" class="ui grid four column centered stackable">
                         <ui:repeat value="#{itemView.allItemsByCategory(category)}" var="item">
                             <div class="column">
                                 <div class="ui special cards">
                                     <div class="card ui primary button">
-                                        <div class="blurring dimmable image">
 
-                                            <!--<div class="ui inverted dimmer">-->
-                                            <h:commandLink id="fas" action="#{itemView.onDashboardItemDetail(item)}"
-                                                           styleClass="ui inverted dimmer">
+
+                                        <!--<div class="ui inverted dimmer">-->
+                                        <h:commandLink id="fas" action="#{itemView.onDashboardItemDetail(item)}"
+                                                       styleClass="blurring dimmable image">
+                                            <div class="ui dimmer">
                                                 <div class="content">
-                                                    <div class="center">
 
-                                                    </div>
-                                                    <div class="description">
-                                                        <h3 style="color: black">#{itemView.trimHeader(item.header)}</h3>
-                                                    </div>
+                                                    <h3 style="color: white">#{itemView.trimHeader(item.header)}</h3>
 
                                                 </div>
-                                            </h:commandLink>
 
-                                            <!--</div>-->
-                                            <img src="#{item.img}"/>
+                                            </div>
+                                            <img class="ui image"
+                                                 src="data:image/png;base64,#{item.imgBase}"/>
+                                        </h:commandLink>
 
-                                        </div>
-                                        <div class="ui two bottom attached buttons">
-                                            <h:commandButton styleClass="ui blue button" id="deleteItem"
-                                                             value="Editovať item"
-                                                             action="#{itemView.onDashboardItemDetail(item)}"
-                                            />
-                                            <h:commandButton styleClass="ui button" id="editItem"
-                                                             value="Vymazať item"
-                                                             action="#{itemView.deleteItem(item)}"
-                                            />
-                                        </div>
+                                        <!--</div>-->
+                                        <!--<img src="#{item.img}"/>-->
+                                        <!-- <img class="ui image small"
+                                              src="data:image/png;base64,#{item.imgBase}"/>-->
+                                    </div>
+                                    <div class="ui two bottom attached buttons">
+                                        <h:commandButton styleClass="ui blue button" id="deleteItem"
+                                                         value="Editovať item"
+                                                         action="#{itemView.onDashboardItemDetail(item)}"
+                                        />
+                                        <h:commandButton styleClass="ui button" id="editItem"
+                                                         value="Vymazať item"
+                                                         action="#{itemView.deleteItem(item)}"
+                                        />
                                     </div>
                                 </div>
                             </div>
+
 
                         </ui:repeat>
 

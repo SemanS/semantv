@@ -4,11 +4,14 @@ import com.ocpsoft.pretty.PrettyContext;
 import com.webinson.semantv.dto.CategoryDto;
 import com.webinson.semantv.dto.ItemDto;
 import com.webinson.semantv.entity.Category;
+import com.webinson.semantv.entity.Item;
 import com.webinson.semantv.service.CategoryService;
 import com.webinson.semantv.service.ItemService;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.io.IOUtils;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +26,9 @@ import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.*;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
 
@@ -67,16 +73,20 @@ public class EditorController implements Serializable {
     @Setter
     private String imgText;
 
-    @Getter
+    /*@Getter
     @Setter
     private Part file;
 
     @Getter
     @Setter
-    private Part imgFile;
+    private Part imgFile;*/
 
     @Autowired
     ItemService itemService;
+
+    @Getter
+    @Setter
+    private UploadedFile baseImgFile;
 
     @PostConstruct
     public void init() {
@@ -85,6 +95,7 @@ public class EditorController implements Serializable {
         itemDto = showItemDto();
         categories = categoryService.getAllCategories();
         selectedCategory = itemDto.getCategory().getName();
+
     }
 
     public ItemDto showItemDto() {
@@ -96,12 +107,20 @@ public class EditorController implements Serializable {
 
     }
 
-    public String saveItem() {
+    public String saveItem() throws IOException {
         String path = PrettyContext.getCurrentInstance().getRequestURL().toURL();
         String segments[] = path.split("/");
         String resultUrl = segments[segments.length - 1];
 
-        itemService.saveItemByUrl(resultUrl, selectedCategory, itemDto);
+        Item item = itemService.getEntityByUrl(resultUrl);
+
+
+        if (baseImgFile.getSize() != 0) {
+            item.setImgBase(IOUtils.toByteArray(baseImgFile.getInputstream()));
+        }
+
+        item.setText(text);
+        itemService.saveItemByUrl(selectedCategory, item);
         return "pretty:dashboard";
     }
 
@@ -135,19 +154,23 @@ public class EditorController implements Serializable {
     }
 
     public void uploadListener() throws Exception {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
+
+        /*FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
         HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
 
         String fileName = FilenameUtils.getName(file.getSubmittedFileName());
         String fileNamePrefix = FilenameUtils.getBaseName(fileName) + "_";
-        /*String fileNameSuffix = "." + "jpg";*/
+        *//*String fileNameSuffix = "." + "jpg";*//*
         String fileNameSuffix = "." + FilenameUtils.getExtension(fileName);
 
         File uploadFolder = new File("/var/project/images");
-
-        try {
+*/
+        /*try {
             File result = File.createTempFile(fileNamePrefix, fileNameSuffix, uploadFolder);
+            String newResult = result.getCanonicalPath();
+            String segments[] = newResult.split("/");
+            String resultImg = segments[segments.length - 1];
 
             FileOutputStream fileOutputStream = new FileOutputStream(result);
             byte[] buffer = new byte[1024];
@@ -167,7 +190,13 @@ public class EditorController implements Serializable {
             fileOutputStream.close();
             inputStream.close();
 
-            setText(text + "<img src=\"/images/" + result.getName() + "\" />");
+            setText(text + "<img src=\"/images/" + resultImg + "\" />");
+
+            String path = PrettyContext.getCurrentInstance().getRequestURL().toURL();
+            String segmenty[] = path.split("/");
+            String resultUrl = segmenty[segmenty.length - 1];
+
+            itemService.saveTextByUrl(resultUrl, text);
 
             if (header != "") {
 
@@ -184,24 +213,28 @@ public class EditorController implements Serializable {
             e.printStackTrace();
             FacesMessage error = new FacesMessage("The files were not uploaded!");
             FacesContext.getCurrentInstance().addMessage(null, error);
-        }
+        }*/
 
     }
 
     public void uploadImageListener() throws Exception {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
+
+        /*FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
         HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
 
         String fileName = FilenameUtils.getName(imgFile.getSubmittedFileName());
         String fileNamePrefix = FilenameUtils.getBaseName(fileName) + "_";
-        /*String fileNameSuffix = "." + "jpg";*/
+        *//*String fileNameSuffix = "." + "jpg";*//*
         String fileNameSuffix = "." + FilenameUtils.getExtension(fileName);
 
         File uploadFolder = new File("/var/project/images");
 
         try {
             File result = File.createTempFile(fileNamePrefix, fileNameSuffix, uploadFolder);
+            String newResult = result.getCanonicalPath();
+            String segments[] = newResult.split("/");
+            String resultImg = segments[segments.length - 1];
 
             FileOutputStream fileOutputStream = new FileOutputStream(result);
             byte[] buffer = new byte[1024];
@@ -221,7 +254,7 @@ public class EditorController implements Serializable {
             fileOutputStream.close();
             inputStream.close();
 
-            setImgText("/images/" + result.getName());
+            setImgText("/images/" + resultImg);
             saveImageText();
 
             RequestContext.getCurrentInstance().update("editor_input");
@@ -235,7 +268,8 @@ public class EditorController implements Serializable {
             e.printStackTrace();
             FacesMessage error = new FacesMessage("The files were not uploaded!");
             FacesContext.getCurrentInstance().addMessage(null, error);
-        }
+        }*/
+
 
     }
 

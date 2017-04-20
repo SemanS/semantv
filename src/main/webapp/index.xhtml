@@ -33,7 +33,11 @@
 
     <!-- Page Contents -->
     <div class="pusher" id="example1">
-        <img class="ui small image center-image" src="resources/images/logo%20semantv.png"/>
+        <pre></pre>
+        <h:outputLink class="item right"
+                      value="${pageContext.request.contextPath}/dashboard.xhtml"><img
+                class="ui small image center-image"
+                src="resources/images/logo%20semantv.png"/></h:outputLink>
         <!-- <div class="ui sticky" style="width: 272px ! important; height: 262.567px ! important; left: 19.0333px;">
 
          </div>-->
@@ -81,7 +85,7 @@
         </div>-->
 
         <!--</div>-->
-        <pre></pre>
+
 
         <ui:repeat value="#{itemView.getCategories()}" var="category">
             <div class="ui container text">
@@ -94,7 +98,7 @@
             <pre></pre>
             <div class="ui container">
                 <h:form id="form">
-                    <div class="ui grid four column centered">
+                    <div class="ui grid four column stackable centered">
                         <ui:repeat value="#{itemView.allItemsByCategory(category)}" var="item">
                             <div class="column">
                                 <!--<div class="ui link cards">-->
@@ -140,7 +144,7 @@
         <!--<div class="ui fitted divider"></div>-->
 
         <pre></pre>
-        <h:form id="formular" styleClass="ui form">
+        <h:form id="formular" styleClass="ui form stackable">
             <p:growl showDetail="true"/>
             <div class="ui inverted vertical footer segment">
                 <div class="ui container">

@@ -75,6 +75,9 @@
     </script>
 </h:head>
 <h:body>
+    <ui:insert name="date">
+        <ui:include src="WEB-INF/templates/menu.xhtml"/>
+    </ui:insert>
     <h:outputLabel value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
     <div class="ui middle aligned center aligned grid">
         <div class="column">
@@ -112,9 +115,7 @@
     </div>
 
     <h:outputScript name="js/jquery-3.1.1.min.js"/>
-    <!--<h:outputScript name="js/materialize.min.js"/>-->
     <h:outputScript name="js/init.js"/>
-    <!--<h:outputScript name="js/semantic.min.js"/>-->
     <h:outputScript name="js/visibility.min.js"/>
 </h:body>
 
